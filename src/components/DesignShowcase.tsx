@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 
 const designCategories = [
   {
@@ -67,37 +67,17 @@ export const DesignShowcase = () => {
         {/* Design Grid */}
         <div className="grid md:grid-cols-3 gap-6">
           {designCategories[activeCategory].designs.map((design) => (
-            <DesignCard key={design.id} design={design} />
+            <div key={design.id} className="rounded-xl overflow-hidden shadow-lg">
+              <BeforeAfterSlider 
+                beforeImage={design.before}
+                afterImage={design.after}
+                beforeLabel="Before"
+                afterLabel="After"
+              />
+            </div>
           ))}
         </div>
       </div>
     </section>
-  );
-};
-
-const DesignCard = ({ design }: { design: { id: number; before: string; after: string } }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  return (
-    <Card 
-      className="relative overflow-hidden group cursor-pointer h-64"
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
-    >
-      <div className="relative w-full h-full">
-        <img 
-          src={isFlipped ? design.after : design.before}
-          alt={isFlipped ? "After transformation" : "Before transformation"}
-          className="w-full h-full object-cover transition-all duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="absolute bottom-4 left-4 text-white">
-            <span className="text-sm font-medium">
-              {isFlipped ? "After" : "Before"}
-            </span>
-          </div>
-        </div>
-      </div>
-    </Card>
   );
 };

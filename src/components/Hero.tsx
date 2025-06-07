@@ -1,8 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="pt-24 pb-12 px-6">
       <div className="container mx-auto">
@@ -27,6 +30,7 @@ export const Hero = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 text-lg"
+                onClick={() => navigate('/workspace')}
               >
                 Start Designing →
               </Button>

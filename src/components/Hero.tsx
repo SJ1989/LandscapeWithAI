@@ -62,9 +62,6 @@ export const Hero = () => {
                 afterLabel="After"
               />
             </div>
-            {/* Floating elements */}
-            <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full opacity-20 animate-pulse"></div>
-            <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full opacity-20 animate-pulse delay-1000"></div>
           </div>
         </div>
       </div>

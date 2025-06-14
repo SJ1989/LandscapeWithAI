@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: yard-alchemy-postgres
+    environment:
+      POSTGRES_DB: yard_alchemy
+      POSTGRES_USER: yard_user
+      POSTGRES_PASSWORD: yard_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yard_user -d yard_alchemy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: yard-alchemy-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: yard-alchemy-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+
+  frontend:
+    image: node:18-alpine
+    container_name: yard-alchemy-frontend
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3001:8080"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8081
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - postgres
+      - redis
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+  redis_data:

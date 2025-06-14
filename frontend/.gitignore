@@ -7,17 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-frontend/node_modules
+node_modules
 dist
 dist-ssr
 *.local
-
-# Backend build and uploads
-backend/build/
-backend/uploads/originals/*
-backend/uploads/thumbnails/*
-backend/uploads/processed/*
-!backend/uploads/.gitkeep
 
 # Editor directories and files
 .vscode/*
@@ -29,7 +22,3 @@ backend/uploads/processed/*
 *.njsproj
 *.sln
 *.sw?
-
-claude-docs/*
-CLAUDE.md
-.env

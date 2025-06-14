@@ -1,0 +1,40 @@
+# Local development profile - uses H2 if PostgreSQL is not available
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+    
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+    
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
+  flyway:
+    enabled: false # Disable Flyway for H2 local development
+    
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      # Fallback to no-op cache if Redis is not available
+      
+  cache:
+    type: simple # Use simple cache instead of Redis for local development
+
+logging:
+  level:
+    com.yardalchemy: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
